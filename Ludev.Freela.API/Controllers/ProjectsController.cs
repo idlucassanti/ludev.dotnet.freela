@@ -1,5 +1,7 @@
+using Ludev.Freela.API.Constants;
 using Ludev.Freela.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Ludev.Freela.API.Controllers
 {
@@ -7,6 +9,15 @@ namespace Ludev.Freela.API.Controllers
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
+        private readonly AppSettings _settings;
+
+        public ProjectsController(IOptions<AppSettings> settings, ExempleInjection injection)
+        {
+            _settings = settings.Value;
+
+            injection.Name = injection.Name;
+        }
+
         // api/projects?query=netcore
         [HttpGet]
         public IActionResult Get(string query)
@@ -43,6 +54,27 @@ namespace Ludev.Freela.API.Controllers
         // api/projects/1
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
+        {
+            return NoContent();
+        }
+
+        // api/projects/1/comments
+        [HttpPost("{id}/comments")]
+        public IActionResult PostComment(int id, [FromBody] CreateCommentModel createComment)
+        {
+            return NoContent();
+        }
+
+        // api/projects/1/start
+        [HttpPut("{id}/start")]
+        public IActionResult Start(int id)
+        {
+            return NoContent();
+        }
+
+        // api/projects/1/finish
+        [HttpPut("{id}/finish")]
+        public IActionResult Finish(int id)
         {
             return NoContent();
         }
